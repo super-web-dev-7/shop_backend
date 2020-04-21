@@ -1,0 +1,10 @@
+[
+    {
+        "country": "Israel",
+        "languages": ["English", "Hebrew"]
+    },
+    {
+        "country": "USA",
+        "language": ["English", "Russian"]
+    }
+]

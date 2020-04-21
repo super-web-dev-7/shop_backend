@@ -1,0 +1,18 @@
+[
+    {
+        "language": "English",
+        "direction": "ltr"
+    },
+    {
+        "language": "Hebrew",
+        "direction": "rtl"
+    },
+    {
+        "language": "Russian",
+        "direction": "ltr"
+    },
+    {
+        "language": "Arab",
+        "direction": "rtl"
+    }
+]
