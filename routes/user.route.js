@@ -9,5 +9,6 @@ router.route('/deleteUser/:id').delete(UserController.deleteUser);
 router.route('/getUser/:id').get(UserController.getUser);
 router.route('/getUsersForShopAdmin/:id').get(UserController.getUsersForShopAdmin);
 router.route('/addShopAdmin').post(UserController.addShopAdmin);
+router.route('/addUser').post(UserController.addUser);
 
 export default router;
