@@ -9,4 +9,5 @@ router.route('/')
 
 router.route('/importLanguage').get(TestController.importLanguage);
 router.route('/importCountry').get(TestController.importCountries);
+router.route('/createAssign').get(TestController.createAssign);
 export default router;

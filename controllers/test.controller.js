@@ -2,6 +2,7 @@ import Language from '../utility/language.json'
 import Countries from '../utility/countries.json'
 import LanguageSchema from '../models/language.model'
 import CountrySchema from '../models/country.model'
+import AssignSchema from '../models/assign.model';
 
 export const test = (req, res, next) => {
     res.send("pong");
@@ -25,7 +26,21 @@ export const importCountries = (req, res, next) => {
         const data =  new CountrySchema({
             name: country.country,
             languages: country.languages
-        })
+        });
         data.save().then(savedData => console.log(savedData))
     }
-}
+};
+
+export const createAssign = (req, res, next) => {
+    const newAssign = new AssignSchema({
+        user: [1],
+        profile: [1],
+        country: [1],
+        language: [1],
+        shop: [1],
+        createdAt: Date.now(),
+        createdBy: 'Main Admin',
+        updatedBy: 'Main Admin'
+    });
+    newAssign.save();
+};
