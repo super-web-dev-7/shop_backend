@@ -22,22 +22,30 @@ export const getUser = (req, res, next) => {
 export const addUser = (req, res, next) => {
     const user = req.body;
     console.log(user)
-    bcrypt.hash(user.password, saltRounds, function(err, hash) {
-        const userModel = new UserSchema({
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            password: hash,
-            country: user.country,
-            language: user.language,
-            role: user.role,
-            shop: user.shop
-        });
+    UserSchema.find({email: user.email}, function (err, result) {
+        if (result.length > 0) {
+            res.status(200).json({unique: false});
+        } else {
+            bcrypt.hash(user.password, saltRounds, function(err, hash) {
+                const userModel = new UserSchema({
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    password: hash,
+                    country: user.country,
+                    language: user.language,
+                    role: user.role,
+                    shop: user.shop,
+                    status: true
+                });
 
-        userModel.save()
-            .then(savedUser => res.status(201).json(savedUser))
-            .catch(e => next(e));
-    });
+                userModel.save()
+                    .then(savedUser => res.status(201).json({unique: true, data: savedUser}))
+                    .catch(e => next(e));
+            });
+        }
+    })
+
 };
 
 export const editUser = (req, res, next) => {
@@ -59,7 +67,7 @@ export const deleteUser = (req, res) => {
 
 export const getUsersForShopAdmin = (req, res, next) => {
     let id = req.params.id;
-    UserSchema.find({shop: id}).populate('language').populate('country').exec(function (err, result) {
+    UserSchema.find({shop: id}).populate('language').populate('country').populate('profile').exec(function (err, result) {
         if (err) res.status(500).json(err);
         else res.status(200).json(result);
     })
@@ -67,20 +75,27 @@ export const getUsersForShopAdmin = (req, res, next) => {
 
 export const addShopAdmin = (req, res, next) => {
     const user = req.body;
-    bcrypt.hash(user.password, saltRounds, function(err, hash) {
-        const userModel = new UserSchema({
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            password: hash,
-            country: user.country,
-            language: user.language,
-            shop: user.shop,
-            role: 1
-        });
+    UserSchema.find({email: user.email}, function (err, result) {
+        if (result.length > 0) res.status(200).json({unique: false});
+        else {
+            bcrypt.hash(user.password, saltRounds, function(err, hash) {
+                const userModel = new UserSchema({
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    password: hash,
+                    country: user.country,
+                    language: user.language,
+                    shop: user.shop,
+                    role: 1,
+                    status: true,
+                    profile: user.profile
+                });
 
-        userModel.save()
-            .then(savedUser => res.status(201).json(savedUser))
-            .catch(e => next(e));
-    });
+                userModel.save()
+                    .then(savedUser => res.status(201).json({unique: true, data: savedUser}))
+                    .catch(e => res.status(500).json(e));
+            });
+        }
+    })
 };

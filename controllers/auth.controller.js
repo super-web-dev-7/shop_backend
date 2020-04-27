@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
+const fs = require('fs');
 import User from '../models/user.model';
 import config from "../config/config";
 
@@ -8,8 +8,11 @@ const saltRounds = 10;
 
 export const login = async (req, res, next) => {
     const { email, password } = req.body;
+    console.log(req.body)
     const user = await User.getUserByEmail(email);
     console.log(user)
+    // const privateKey = fs.readFileSync(__dirname + '/../private.key', 'utf8');
+    // console.log("privatekey >>>>", privateKey)
     if(user) {
         bcrypt.compare(password, user.password, function(err, result) {
             if(result) {

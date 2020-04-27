@@ -13,6 +13,21 @@ const ProfileSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    user: {
+        type: [Number],
+    },
+    profile: {
+        type: [Number],
+    },
+    country: {
+        type: [Number],
+    },
+    language: {
+        type: [Number],
+    },
+    shop: {
+        type: [Number],
+    },
     createdAt: {
         type: Date,
         default: Date.now

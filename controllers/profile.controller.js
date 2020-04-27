@@ -42,6 +42,25 @@ export const editProfile = (req, res, next) => {
     });
 };
 
+export const assignToProfile = (req, res, next) => {
+    const assignData = {
+        user: req.body.user,
+        country:req.body.country,
+        language:req.body.language,
+        profile: req.body.profile,
+        shop: req.body.shop,
+        updatedBy: req.body.updatedBy,
+        updatedAt: Date.now()
+    };
+
+    ProfileSchema.updateOne({_id: req.params.id}, assignData, function (err, result) {
+        if (err) res.status(500).json(err);
+        else res.status(200).json(result);
+    });
+
+    console.log(assignData)
+}
+
 export const getProfilesForShopAdmin = (req, res, next) => {
     let shopId = req.params.shopId;
     ProfileSchema.find({shopID: shopId}).populate('shopID').sort('-createdAt').exec(function (err, result) {

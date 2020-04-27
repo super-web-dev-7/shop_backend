@@ -45,6 +45,14 @@ const UserSchema = new mongoose.Schema({
         required: true,
         default: 0
     },
+    status: {
+        type: Boolean,
+        required: true
+    },
+    profile: {
+        type: mongoose.Schema.Types.ObjectID,
+        ref: "Profile"
+    },
     createdAt: {
         type: Date,
         default: Date.now
