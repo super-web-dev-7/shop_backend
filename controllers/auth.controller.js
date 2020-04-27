@@ -51,7 +51,8 @@ export const signup = (req, res, next) => {
             email: user.email,
             password: hash,
             country: user.country,
-            language: user.language
+            language: user.language,
+            status: true
         });
 
         userModel.save()

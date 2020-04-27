@@ -17,12 +17,8 @@ export const addProfile = (req, res, next) => {
         updatedAt: Date.now(),
         updatedBy: req.body.createdBy
     });
-    console.log('________________________________________________________________')
-    console.log(newProfile)
-    console.log('________________________________________________________________')
     if (req.body.isMainAdmin === true) {
         ProfileSchema.find({name: req.body.name, isMainAdmin: true}).exec(function (err, result) {
-            console.log(result.length)
             if (result.length > 0) {
                 res.send({status: 'duplicated'})
             } else {
@@ -31,7 +27,6 @@ export const addProfile = (req, res, next) => {
         })
     } else {
         ProfileSchema.find({name: req.body.name, shopID: req.body.shopId}).exec(function (err, result) {
-            console.log(result.length)
             if (result.length > 0) {
                 res.send({status: 'duplicated'})
             } else {
@@ -39,8 +34,6 @@ export const addProfile = (req, res, next) => {
             }
         })
     }
-
-    // newProfile.save().then(result => res.status(201).json(result)).catch(e => next(e))
 };
 
 export const deleteProfile = (req, res, next) => {
@@ -80,8 +73,6 @@ export const assignToProfile = (req, res, next) => {
         if (err) res.status(500).json(err);
         else res.status(200).json(result);
     });
-
-    console.log(assignData)
 }
 
 export const getProfilesForShopAdmin = (req, res, next) => {
