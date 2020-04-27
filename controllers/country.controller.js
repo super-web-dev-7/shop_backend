@@ -9,7 +9,15 @@ export const getAll = (req, res, next) => {
 
 export const addCountry = (req, res, next) => {
     const newCountry = new CountrySchema(req.body);
-    newCountry.save().then(result => res.status(201).json(result)).catch(e => next(e))
+    newCountry.save().then(result => res.status(201).json({status: 'success', result: result})).catch(e => {
+        if (e.errors.name.properties.type === 'unique') {
+            console.log(e)
+            res.send({status: 'duplicated'})
+        } else {
+            res.status(500).json({status: 'Server Error'});
+            next(e);
+        }
+    })
 };
 
 export const deleteCountry = (req, res) => {

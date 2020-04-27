@@ -17,7 +17,30 @@ export const addProfile = (req, res, next) => {
         updatedAt: Date.now(),
         updatedBy: req.body.createdBy
     });
-    newProfile.save().then(result => res.status(201).json(result)).catch(e => next(e))
+    console.log('________________________________________________________________')
+    console.log(newProfile)
+    console.log('________________________________________________________________')
+    if (req.body.isMainAdmin === true) {
+        ProfileSchema.find({name: req.body.name, isMainAdmin: true}).exec(function (err, result) {
+            console.log(result.length)
+            if (result.length > 0) {
+                res.send({status: 'duplicated'})
+            } else {
+                newProfile.save().then(result => res.status(201).json({status: 'success', result: result})).catch(e => next(e))
+            }
+        })
+    } else {
+        ProfileSchema.find({name: req.body.name, shopID: req.body.shopId}).exec(function (err, result) {
+            console.log(result.length)
+            if (result.length > 0) {
+                res.send({status: 'duplicated'})
+            } else {
+                newProfile.save().then(result => res.status(201).json({status: 'success', result: result})).catch(e => next(e))
+            }
+        })
+    }
+
+    // newProfile.save().then(result => res.status(201).json(result)).catch(e => next(e))
 };
 
 export const deleteProfile = (req, res, next) => {
