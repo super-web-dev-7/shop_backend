@@ -6,7 +6,7 @@ import UserSchema from '../models/user.model';
 const saltRounds = 10;
 
 export const getAll = (req, res, next) => {
-    UserSchema.find({}).populate('country').populate('language').populate('shop').exec(function (err, result) {
+    UserSchema.find({}).populate('country').populate('language').populate('shop').populate('profile').exec(function (err, result) {
         if (err) res.status(500).json(err);
         else res.status(200).json(result);
     })
@@ -36,7 +36,8 @@ export const addUser = (req, res, next) => {
                     language: user.language,
                     role: user.role,
                     shop: user.shop,
-                    status: true
+                    status: true,
+                    profile: user.profile
                 });
 
                 userModel.save()
