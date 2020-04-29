@@ -85,7 +85,7 @@ UserSchema.statics = {
 
     getUserByEmail(email) {
 
-        return this.findOne({email: email}).populate('language')
+        return this.findOne({email: email}).populate('language').populate('profile')
             .exec()
             .then((user) => {
                 if(user) {

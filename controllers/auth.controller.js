@@ -25,7 +25,8 @@ export const login = async (req, res, next) => {
                     isRTL: user.language.isRTL,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    shop: user.shop
+                    shop: user.shop,
+                    profile: user.profile
                 }, config.jwtSecret);
                 res.json({ token });
             } else {

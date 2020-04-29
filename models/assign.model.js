@@ -4,22 +4,27 @@ const AssignSchema = new mongoose.Schema({
     user: {
         type: [Number],
         required: true,
+        default: []
     },
     profile: {
         type: [Number],
         required: true,
+        default: []
     },
     country: {
         type: [Number],
         required: true,
+        default: []
     },
     language: {
         type: [Number],
         required: true,
+        default: []
     },
     shop: {
         type: [Number],
         required: true,
+        default: []
     },
     createdAt: {
         type: Date,
