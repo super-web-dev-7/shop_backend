@@ -13,7 +13,7 @@ export const getAll = (req, res, next) => {
 };
 
 export const getUser = (req, res, next) => {
-    UserSchema.find({_id: req.params.id}).populate('language').populate('country').exec(function (err, result) {
+    UserSchema.findOne({_id: req.params.id}).populate('language').populate('country').populate('profile').exec(function (err, result) {
         if (err) res.status(500).json(err);
         else res.status(200).json(result);
     })
